@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bianca Maria Boninsegni — Lacoste Application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:      #00703C;
+    --green-dark: #005A30;
+    --green-xd:   #003D20;
+    --green-lt:   #1A8A4A;
+    --green-pale: #E8F5EE;
+    --green-mist: rgba(0,112,60,.07);
+    --white:      #FFFFFF;
+    --off-white:  #F7F9F7;
+    --ink:        #0F1A14;
+    --mid:        #3D5445;
+    --light:      #7A9984;
+    --rule:       rgba(0,112,60,.18);
+    --yellow:     #F2D94E;  /* tennis ball accent */
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── CURSOR ── */
+  html { cursor: none; }
+  .cur {
+    position:fixed; z-index:9999; pointer-events:none;
+    width:8px; height:8px; border-radius:50%;
+    background: var(--green);
+    transform:translate(-50%,-50%);
+    transition: width .1s, height .1s, background .2s;
+  }
+  .cur-ring {
+    position:fixed; z-index:9998; pointer-events:none;
+    width:30px; height:30px; border-radius:50%;
+    border:1.5px solid rgba(0,112,60,.4);
+    transform:translate(-50%,-50%);
+    transition: width .25s, height .25s;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 64px;
+    height:68px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav-logo {
+    display:flex; align-items:center; gap:14px;
+  }
+  /* Croc silhouette SVG inline */
+  .croc-svg { width:32px; height:20px; }
+  .nav-brand {
+    font-family:'Unbounded', sans-serif;
+    font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--green);
+  }
+  .nav-links { display:flex; gap:40px; list-style:none; }
+  .nav-links a {
+    font-size:10px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--mid); text-decoration:none; opacity:.6;
+    transition:opacity .2s, color .2s;
+  }
+  .nav-links a:hover { opacity:1; color:var(--green); }
+  .nav-pill {
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--white); background:var(--green);
+    padding:9px 18px;
+    border-radius:2px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position:relative; min-height:100vh;
+    display:grid; grid-template-columns:1fr 1fr;
+    align-items:center;
+    padding:100px 64px 80px;
+    overflow:hidden;
+    background:var(--off-white);
+  }
+
+  /* Court lines background */
+  .hero::before {
+    content:'';
+    position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px),
+      linear-gradient(0deg, var(--rule) 1px, transparent 1px);
+    background-size:80px 80px;
+    opacity:.35;
+  }
+  /* Green stripe top */
+  .hero::after {
+    content:'';
+    position:absolute; top:0; left:0; right:0;
+    height:4px;
+    background:var(--green);
+  }
+
+  .hero-left { position:relative; z-index:2; }
+
+  .hero-tag {
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--green);
+    color:var(--white);
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    padding:9px 16px;
+    margin-bottom:36px;
+    animation:slideIn .7s .1s both;
+  }
+  .hero-tag-dot { width:5px; height:5px; border-radius:50%; background:var(--yellow); flex-shrink:0; }
+
+  .hero-name {
+    font-family:'Unbounded', sans-serif;
+    font-size:clamp(36px,5vw,68px);
+    font-weight:700;
+    line-height:.95;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    margin-bottom:20px;
+    animation:slideIn .7s .25s both;
+  }
+  .hero-name .green { color:var(--green); }
+
+  .hero-role {
+    font-family:'DM Sans', sans-serif;
+    font-size:13px; font-weight:400;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:var(--light);
+    margin-bottom:44px;
+    animation:slideIn .7s .4s both;
+  }
+
+  .hero-pitch {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(17px,2.2vw,23px);
+    font-style:italic;
+    line-height:1.65;
+    color:var(--mid);
+    max-width:460px;
+    margin-bottom:52px;
+    animation:slideIn .7s .55s both;
+  }
+  .hero-pitch strong { font-style:normal; color:var(--green); font-family:'DM Sans'; font-weight:500; }
+
+  .hero-btns {
+    display:flex; gap:14px; align-items:center;
+    animation:slideIn .7s .7s both;
+  }
+  .btn-solid {
+    display:inline-flex; align-items:center; gap:12px;
+    font-family:'Unbounded', sans-serif;
+    font-size:9px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--white); background:var(--green);
+    padding:16px 28px; text-decoration:none;
+    border:2px solid var(--green);
+    transition:all .25s;
+  }
+  .btn-solid:hover { background:var(--green-dark); transform:translateY(-2px); box-shadow:0 10px 32px rgba(0,112,60,.22); }
+  .btn-outline {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Unbounded', sans-serif;
+    font-size:9px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--green); background:transparent;
+    padding:16px 28px; text-decoration:none;
+    border:2px solid var(--green);
+    transition:all .25s;
+  }
+  .btn-outline:hover { background:var(--green-mist); }
+
+  .hero-right {
+    position:relative; z-index:2;
+    display:flex; flex-direction:column;
+    align-items:flex-end; gap:3px;
+    animation:slideIn .7s .5s both;
+  }
+
+  .stat-box {
+    width:260px; padding:28px 32px;
+    background:var(--white);
+    border:1px solid var(--rule);
+    border-left:4px solid var(--green);
+    transition:all .3s;
+  }
+  .stat-box:hover { transform:translateX(-4px); box-shadow:4px 0 0 var(--green), 0 8px 32px rgba(0,112,60,.1); }
+  .stat-box-n {
+    font-family:'Unbounded', sans-serif;
+    font-size:34px; font-weight:700;
+    color:var(--green); line-height:1;
+    margin-bottom:6px;
+  }
+  .stat-box-l {
+    font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--light);
+  }
+
+  /* tennis ball decoration */
+  .tennis-ball {
+    position:absolute; right:-30px; top:50%;
+    transform:translateY(-50%);
+    width:120px; height:120px; border-radius:50%;
+    background:var(--yellow);
+    opacity:.12;
+    pointer-events:none;
+  }
+
+  @keyframes slideIn {
+    from { opacity:0; transform:translateX(-20px); }
+    to   { opacity:1; transform:translateX(0); }
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background:var(--green);
+    overflow:hidden; padding:12px 0;
+    border-top:2px solid var(--green-dark);
+  }
+  .ticker-track {
+    display:flex; width:max-content;
+    animation:ticker 22s linear infinite;
+  }
+  .ticker-item {
+    display:flex; align-items:center; gap:20px;
+    padding:0 28px; white-space:nowrap;
+    font-family:'Unbounded', sans-serif;
+    font-size:9px; font-weight:600;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(255,255,255,.75);
+  }
+  .ticker-sep { color:var(--yellow); font-size:10px; }
+  @keyframes ticker {
+    0% { transform:translateX(0); }
+    100% { transform:translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  .tag-line {
+    display:inline-flex; align-items:center; gap:10px;
+    margin-bottom:12px;
+  }
+  .tag-line-bar { width:28px; height:3px; background:var(--green); }
+  .tag-line span {
+    font-family:'Unbounded', sans-serif;
+    font-size:9px; font-weight:600;
+    letter-spacing:.32em; text-transform:uppercase;
+    color:var(--green);
+  }
+
+  .sec-h {
+    font-family:'Unbounded', sans-serif;
+    font-size:clamp(28px,4vw,52px);
+    font-weight:700; line-height:1.0;
+    letter-spacing:-.02em; color:var(--ink);
+  }
+  .sec-h .green { color:var(--green); }
+  .sec-h .italic { font-family:'DM Serif Display', serif; font-style:italic; font-weight:400; }
+
+  /* ── MATCH SECTION — why I fit ── */
+  .match {
+    padding:100px 64px;
+    max-width:1300px; margin:0 auto;
+  }
+  .match-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:80px; align-items:start;
+    margin-top:56px;
+  }
+  .match-intro {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(20px,2.5vw,28px);
+    font-style:italic;
+    line-height:1.6; color:var(--mid);
+  }
+  .match-intro strong { font-family:'DM Sans'; font-style:normal; color:var(--green); font-weight:600; }
+
+  .match-cards { display:flex; flex-direction:column; gap:3px; }
+  .match-card {
+    display:grid; grid-template-columns:52px 1fr;
+    gap:16px; align-items:start;
+    padding:22px 24px;
+    background:var(--off-white);
+    border:1px solid var(--rule);
+    border-left:4px solid transparent;
+    transition:all .3s;
+  }
+  .match-card:hover { border-left-color:var(--green); background:var(--green-mist); transform:translateX(4px); }
+  .match-card-icon {
+    width:40px; height:40px;
+    background:var(--green);
+    border-radius:2px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; flex-shrink:0;
+  }
+  .match-card-title {
+    font-family:'Unbounded', sans-serif;
+    font-size:9px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--green); margin-bottom:6px;
+  }
+  .match-card-body {
+    font-size:13.5px; line-height:1.75; color:var(--mid);
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    padding:100px 64px;
+    background:var(--ink);
+  }
+  .exp-inner { max-width:1300px; margin:0 auto; }
+  .experience .sec-h { color:var(--white); }
+  .experience .tag-line span { color:var(--yellow); }
+  .experience .tag-line-bar { background:var(--yellow); }
+
+  .exp-stack { display:flex; flex-direction:column; gap:3px; margin-top:56px; }
+
+  .exp-item {
+    display:grid; grid-template-columns:240px 1fr;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.02);
+    overflow:hidden; transition:border-color .3s;
+  }
+  .exp-item:hover { border-color:rgba(0,112,60,.5); }
+
+  .exp-side {
+    padding:40px 32px;
+    border-right:1px solid rgba(255,255,255,.07);
+    display:flex; flex-direction:column; justify-content:space-between;
+    background:rgba(0,112,60,.06);
+  }
+  .exp-co {
+    font-family:'Unbounded', sans-serif;
+    font-size:14px; font-weight:600;
+    color:var(--white); line-height:1.3;
+    margin-bottom:6px;
+  }
+  .exp-loc {
+    font-size:9.5px; letter-spacing:.25em; text-transform:uppercase;
+    color:rgba(255,255,255,.28);
+  }
+  .exp-badge {
+    display:inline-block; margin-top:28px;
+    font-family:'Unbounded', sans-serif;
+    font-size:8px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--green-lt);
+    border:1px solid rgba(0,112,60,.4);
+    padding:7px 12px;
+    align-self:flex-start;
+  }
+
+  .exp-body { padding:40px 48px; }
+  .exp-role-tag {
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.3em; text-transform:uppercase;
+    color:rgba(255,255,255,.25); margin-bottom:8px;
+  }
+  .exp-role-title {
+    font-size:20px; font-weight:500;
+    color:var(--white); line-height:1.2;
+    margin-bottom:28px;
+    font-family:'DM Serif Display', serif;
+    font-style:italic;
+  }
+  .exp-pts { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+  .exp-pts li {
+    display:grid; grid-template-columns:18px 1fr; gap:10px;
+    font-size:13.5px; line-height:1.75;
+    color:rgba(255,255,255,.48); align-items:start;
+  }
+  .exp-pts li::before {
+    content:'›'; font-size:16px;
+    color:var(--green-lt); font-weight:700; margin-top:1px;
+  }
+  .exp-kpi {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.15em; text-transform:uppercase;
+    color:var(--yellow);
+    border:1px solid rgba(242,217,78,.2);
+    background:rgba(242,217,78,.05);
+    padding:9px 16px;
+  }
+  .exp-kpi::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--yellow); flex-shrink:0; }
+
+  /* ── SKILLS ── */
+  .skills { padding:100px 64px; background:var(--off-white); }
+  .skills-inner { max-width:1300px; margin:0 auto; }
+  .skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin-top:56px; }
+  .sk-col {
+    padding:32px 28px; background:var(--white);
+    border:1px solid var(--rule);
+    transition:all .3s;
+  }
+  .sk-col:first-child { background:var(--green); }
+  .sk-col:first-child .sk-title { color:rgba(255,255,255,.6); }
+  .sk-col:first-child .sk-tag { background:rgba(255,255,255,.1); color:rgba(255,255,255,.8); border-color:rgba(255,255,255,.15); }
+  .sk-col:first-child .sk-tag.hot { background:rgba(242,217,78,.15); color:var(--yellow); border-color:rgba(242,217,78,.3); }
+  .sk-col:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,112,60,.1); }
+
+  .sk-title {
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.3em; text-transform:uppercase;
+    color:var(--light); margin-bottom:18px;
+  }
+  .sk-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .sk-tag {
+    font-size:11px; letter-spacing:.05em;
+    color:var(--mid); padding:7px 13px;
+    background:var(--off-white);
+    border:1px solid var(--rule);
+    transition:all .2s;
+  }
+  .sk-tag.hot { background:var(--green-pale); color:var(--green); border-color:rgba(0,112,60,.25); font-weight:500; }
+  .sk-tag:hover { border-color:var(--green); color:var(--green); }
+
+  /* ── PLATFORM EXPERTISE ── */
+  .platforms {
+    padding:80px 64px;
+    background:var(--white);
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .platforms-inner { max-width:1300px; margin:0 auto; }
+  .platform-row {
+    display:grid; grid-template-columns:repeat(5,1fr);
+    gap:3px; margin-top:48px;
+  }
+  .platform-card {
+    padding:32px 24px; text-align:center;
+    border:1px solid var(--rule);
+    background:var(--off-white);
+    transition:all .3s;
+  }
+  .platform-card:hover { background:var(--green); border-color:var(--green); }
+  .platform-card:hover .pf-name { color:var(--white); }
+  .platform-card:hover .pf-level { color:rgba(255,255,255,.6); }
+  .platform-card:hover .pf-icon { color:var(--yellow); }
+  .pf-icon { font-size:28px; margin-bottom:12px; color:var(--green); transition:color .3s; }
+  .pf-name {
+    font-family:'Unbounded', sans-serif;
+    font-size:10px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:6px;
+    transition:color .3s;
+  }
+  .pf-level {
+    font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--light); transition:color .3s;
+  }
+
+  /* ── EDUCATION ── */
+  .education { padding:100px 64px; max-width:1300px; margin:0 auto; }
+  .edu-list { display:flex; flex-direction:column; gap:3px; margin-top:56px; }
+  .edu-row {
+    display:grid; grid-template-columns:180px 1fr 160px;
+    gap:24px; align-items:center;
+    padding:28px 36px;
+    border:1px solid var(--rule);
+    background:var(--off-white);
+    transition:all .3s;
+  }
+  .edu-row:hover { border-color:var(--green); background:var(--green-mist); }
+  .edu-yr {
+    font-family:'Unbounded', sans-serif;
+    font-size:12px; font-weight:300;
+    color:rgba(0,112,60,.25);
+  }
+  .edu-deg { font-size:16px; font-weight:500; color:var(--ink); margin-bottom:3px; line-height:1.3; }
+  .edu-sch {
+    font-size:9.5px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--light);
+  }
+  .edu-grade { text-align:right; }
+  .edu-gn {
+    font-family:'Unbounded', sans-serif;
+    font-size:22px; font-weight:700;
+    color:var(--green); display:block;
+  }
+  .edu-gl {
+    font-size:8.5px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--light);
+  }
+
+  /* ── WHY LACOSTE ── */
+  .why {
+    padding:100px 64px;
+    background:var(--green);
+    position:relative; overflow:hidden;
+  }
+  /* Court texture */
+  .why::before {
+    content:'';
+    position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size:60px 60px;
+  }
+  .why-inner { max-width:1300px; margin:0 auto; position:relative; z-index:1; }
+  .why .sec-h { color:var(--white); }
+  .why .tag-line span { color:var(--yellow); }
+  .why .tag-line-bar { background:var(--yellow); }
+
+  .why-layout {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:72px; margin-top:56px; align-items:start;
+  }
+  .why-manifesto {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(22px,3vw,36px);
+    font-style:italic; font-weight:400;
+    line-height:1.45; color:rgba(255,255,255,.9);
+  }
+  .why-manifesto strong { font-family:'Unbounded'; font-style:normal; font-weight:700; color:var(--yellow); font-size:.7em; letter-spacing:.05em; }
+
+  .why-points { display:flex; flex-direction:column; gap:3px; }
+  .why-pt {
+    display:grid; grid-template-columns:44px 1fr;
+    gap:18px; align-items:start;
+    padding:22px 24px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    transition:all .3s;
+  }
+  .why-pt:hover { background:rgba(255,255,255,.12); }
+  .why-pt-n {
+    font-family:'Unbounded', sans-serif;
+    font-size:20px; font-weight:700;
+    color:rgba(255,255,255,.2); line-height:1;
+    padding-top:2px;
+  }
+  .why-pt-title {
+    font-family:'Unbounded', sans-serif;
+    font-size:8.5px; font-weight:600;
+    letter-spacing:.25em; text-transform:uppercase;
+    color:var(--yellow); margin-bottom:7px;
+  }
+  .why-pt-body { font-size:13.5px; line-height:1.75; color:rgba(255,255,255,.6); }
+
+  /* ── CONTACT ── */
+  .contact { padding:100px 64px; max-width:1300px; margin:0 auto; }
+  .contact-wrap {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:72px; align-items:center; margin-top:56px;
+  }
+  .contact-headline {
+    font-family:'Unbounded', sans-serif;
+    font-size:clamp(24px,3.5vw,44px);
+    font-weight:700; line-height:1.0;
+    letter-spacing:-.02em; color:var(--ink);
+  }
+  .contact-headline .green { color:var(--green); }
+  .contact-sub {
+    font-size:14px; line-height:1.8; color:var(--mid);
+    margin-top:24px; max-width:380px;
+  }
+
+  .contact-details { display:flex; flex-direction:column; gap:0; }
+  .c-row {
+    display:flex; flex-direction:column; gap:4px;
+    padding:20px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .c-row:first-child { padding-top:0; }
+  .c-row:last-child { border-bottom:none; }
+  .c-lbl {
+    font-family:'Unbounded', sans-serif;
+    font-size:8px; font-weight:600;
+    letter-spacing:.35em; text-transform:uppercase;
+    color:var(--green); opacity:.7;
+  }
+  .c-val {
+    font-size:17px; font-weight:400;
+    color:var(--ink); text-decoration:none;
+    transition:color .2s;
+  }
+  .c-val:hover { color:var(--green); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding:24px 64px;
+    background:var(--ink);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  footer p {
+    font-size:9px; letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(255,255,255,.2);
+  }
+  .ft-green {
+    width:40px; height:3px; background:var(--green); opacity:.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:960px){
+    nav { padding:0 24px; }
+    .nav-links, .nav-pill { display:none; }
+    .hero { grid-template-columns:1fr; padding:110px 24px 80px; gap:48px; }
+    .tennis-ball { display:none; }
+    .hero-right { align-items:flex-start; }
+    .stat-box { width:100%; }
+    .match { padding:80px 24px; }
+    .match-grid { grid-template-columns:1fr; gap:48px; }
+    .experience { padding:80px 24px; }
+    .exp-item { grid-template-columns:1fr; }
+    .exp-side { border-right:none; border-bottom:1px solid rgba(255,255,255,.07); }
+    .skills { padding:80px 24px; }
+    .skills-grid { grid-template-columns:1fr 1fr; }
+    .platforms { padding:64px 24px; }
+    .platform-row { grid-template-columns:repeat(3,1fr); }
+    .education { padding:80px 24px; }
+    .edu-row { grid-template-columns:1fr; gap:10px; padding:20px; }
+    .edu-grade { text-align:left; }
+    .why { padding:80px 24px; }
+    .why-layout { grid-template-columns:1fr; gap:48px; }
+    .contact { padding:80px 24px; }
+    .contact-wrap { grid-template-columns:1fr; gap:48px; }
+    footer { padding:20px 24px; flex-direction:column; gap:12px; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg class="croc-svg" viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 28 C8 18, 20 10, 36 14 C50 18, 58 14, 60 10 C60 10, 62 12, 58 18 C54 24, 42 26, 32 22 C22 18, 12 24, 10 32 Z" fill="#00703C"/>
+      <circle cx="52" cy="11" r="2" fill="#00703C"/>
+    </svg>
+    <div class="nav-brand">Boninsegni × Lacoste</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#match">Why Me</a></li>
+    <li><a href="#experience">Career</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-pill">Paris · Social Media Manager</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tennis-ball"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      Global Social Media Manager — Sport & Athletes
+    </div>
+
+    <h1 class="hero-name">
+      BIANCA<br>
+      MARIA<br>
+      <span class="green">BONINSEGNI</span>
+    </h1>
+
+    <p class="hero-role">CRM · Brand Strategy · Social-First Content · O+O Activation</p>
+
+    <p class="hero-pitch">
+      I turn audience data into <strong>social-first stories</strong> that move communities.<br>
+      From luxury maisons to heritage brands, I've built the systems that make moments go further.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#match" class="btn-solid">See the match →</a>
+      <a href="#experience" class="btn-outline">Full career</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-box">
+      <div class="stat-box-n">50K+</div>
+      <div class="stat-box-l">Audience records managed · Richemont</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-n">40+</div>
+      <div class="stat-box-l">Countries activated · Homo Faber</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-n">+15%</div>
+      <div class="stat-box-l">Community engagement uplift · Campari</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-n">110/110</div>
+      <div class="stat-box-l">MSc with Distinction · Cattolica</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><span>Social-First Strategy</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Content Production</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>KPI Tracking & Reporting</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Athlete Storytelling</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>GA4 Certified</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Cross-functional Leadership</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>CRM Architecture</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>INSIDE LVMH</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>French Fashion Sport</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Multi-platform Editorial</span><span class="ticker-sep">✦</span></div>
+    <!-- repeat -->
+    <div class="ticker-item"><span>Social-First Strategy</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Content Production</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>KPI Tracking & Reporting</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Athlete Storytelling</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>GA4 Certified</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Cross-functional Leadership</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>CRM Architecture</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>INSIDE LVMH</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>French Fashion Sport</span><span class="ticker-sep">✦</span></div>
+    <div class="ticker-item"><span>Multi-platform Editorial</span><span class="ticker-sep">✦</span></div>
+  </div>
+</div>
+
+<!-- MATCH — JD alignment -->
+<section id="match" class="match">
+  <div class="tag-line"><div class="tag-line-bar"></div><span>JD Alignment</span></div>
+  <h2 class="sec-h">Why This<br><span class="italic">Match Works</span></h2>
+
+  <div class="match-grid">
+    <p class="match-intro">
+      The JD asks for someone who lives at the intersection of <strong>brand storytelling, sport culture, and platform performance</strong>. Here's exactly where my background connects to each requirement.
+    </p>
+
+    <div class="match-cards">
+      <div class="match-card">
+        <div class="match-card-icon">📊</div>
+        <div>
+          <div class="match-card-title">Performance Mindset</div>
+          <div class="match-card-body">At Campari, I owned GA4 + Meta BM reporting infrastructure end-to-end. KPI tracking, ROI reporting, weekly stakeholder briefs — not support work, but ownership.</div>
+        </div>
+      </div>
+      <div class="match-card">
+        <div class="match-card-icon">✍️</div>
+        <div>
+          <div class="match-card-title">Editorial Consistency Across Platforms</div>
+          <div class="match-card-body">I built and maintained a full CRM editorial calendar aligned to commercial priorities. The same muscle applies to a social sport calendar: pre / live / post storytelling frameworks.</div>
+        </div>
+      </div>
+      <div class="match-card">
+        <div class="match-card-icon">🌍</div>
+        <div>
+          <div class="match-card-title">Global Stakeholder Management</div>
+          <div class="match-card-body">At Richemont / Homo Faber, I coordinated between 40+ country teams and Maisons. Managing validation loops with Sports Marketing, Paid Media, and Content Factory is the same skill set.</div>
+        </div>
+      </div>
+      <div class="match-card">
+        <div class="match-card-icon">🎾</div>
+        <div>
+          <div class="match-card-title">Sport & Luxury Brand Fluency</div>
+          <div class="match-card-body">INSIDE LVMH-certified, with a luxury sector career. Lacoste's "French fashion sport" positioning sits precisely at the intersection I've operated in throughout my career.</div>
+        </div>
+      </div>
+      <div class="match-card">
+        <div class="match-card-icon">⚡</div>
+        <div>
+          <div class="match-card-title">Fast Execution & Reactive Moments</div>
+          <div class="match-card-body">Managing live campaign monitoring and real-time optimisation at Campari. Comfortable with fast-changing calendars — including weekend sport moments when they count most.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="experience">
+  <div class="exp-inner">
+    <div class="tag-line"><div class="tag-line-bar"></div><span>Career</span></div>
+    <h2 class="sec-h" style="color:var(--white)">Where I've <span style="color:var(--yellow)">Performed</span></h2>
+
+    <div class="exp-stack">
+
+      <div class="exp-item">
+        <div class="exp-side">
+          <div>
+            <div class="exp-co">Campari Group<br>Galleria Campari</div>
+            <div class="exp-loc">Milan, Italy</div>
+          </div>
+          <div class="exp-badge">Mar 2025 — Sep 2025</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role-tag">Most Recent · CRM & Digital</div>
+          <div class="exp-role-title">Brand Heritage & Marketing Lead — CRM & Digital</div>
+          <ul class="exp-pts">
+            <li>Owned end-to-end CRM editorial calendar and social content strategy, aligning publishing with commercial priorities and audience segmentation — directly equivalent to managing a social sport calendar</li>
+            <li>Deployed targeted multi-platform communications using behavioural data, monitoring performance in real time and optimising formats, timing, and messaging on the fly</li>
+            <li>Built GA4 + Meta Business Manager reporting infrastructure; delivered weekly performance narratives with actionable next steps to senior stakeholders</li>
+            <li>Coordinated digital, events, and institutional comms teams to ensure 100% brand consistency — the same cross-functional muscle as briefing a Content Factory</li>
+          </ul>
+          <div class="exp-kpi">+15% engagement · GA4 · Meta BM · Editorial ownership</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-side">
+          <div>
+            <div class="exp-co">Richemont<br>Homo Faber 2024</div>
+            <div class="exp-loc">Geneva, Switzerland</div>
+          </div>
+          <div class="exp-badge">Jan 2024 — Oct 2024</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role-tag">Global · 40+ Markets</div>
+          <div class="exp-role-title">Brand & Operational Coordinator</div>
+          <ul class="exp-pts">
+            <li>Coordinated brand activation and data workflows across 40+ countries — building the multi-market stakeholder management skills directly applicable to Lacoste's global sport calendar</li>
+            <li>Developed quantitative consumer profiles and global impact surveys for the Young Ambassadors programme — community-building and influence coordination at an international level</li>
+            <li>Managed 50,000+ visitor data records ensuring quality and integrity; produced strategic reporting for executive decision-making</li>
+            <li>Translated performance insights into digital content improvements for professional audiences — the data-to-content loop at the core of this role</li>
+          </ul>
+          <div class="exp-kpi">50K+ records · 40+ countries · Executive reporting</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-side">
+          <div>
+            <div class="exp-co">Christie's<br>Jewellery Dept.</div>
+            <div class="exp-loc">Milan, Italy</div>
+          </div>
+          <div class="exp-badge">Sep 2022 — Dec 2022</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role-tag">Prestige · HNWI</div>
+          <div class="exp-role-title">Auction & Client Communications Support</div>
+          <ul class="exp-pts">
+            <li>Supported HNWI-targeted communications ensuring brand consistency across all touchpoints during high-stakes commercial activation — live event storytelling under pressure</li>
+            <li>Contributed to €1.77M auction result through market intelligence and audience-segmented content strategy</li>
+            <li>Produced insights grounded in MSc dissertation on consumer behaviour — analytical rigour applied to premium audience storytelling</li>
+          </ul>
+          <div class="exp-kpi">€1.77M result · Premium audience storytelling · Live activation</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM EXPERTISE -->
+<section class="platforms">
+  <div class="platforms-inner">
+    <div class="tag-line"><div class="tag-line-bar"></div><span>Platform Expertise</span></div>
+    <h2 class="sec-h">Where I <span class="italic">Play</span></h2>
+    <div class="platform-row">
+      <div class="platform-card">
+        <div class="pf-icon">📸</div>
+        <div class="pf-name">Instagram</div>
+        <div class="pf-level">Strategic + Operational</div>
+      </div>
+      <div class="platform-card">
+        <div class="pf-icon">🎵</div>
+        <div class="pf-name">TikTok</div>
+        <div class="pf-level">Short-form · Trends</div>
+      </div>
+      <div class="platform-card">
+        <div class="pf-icon">𝕏</div>
+        <div class="pf-name">X / Twitter</div>
+        <div class="pf-level">Live moments · Sport</div>
+      </div>
+      <div class="platform-card">
+        <div class="pf-icon">▶</div>
+        <div class="pf-name">YouTube</div>
+        <div class="pf-level">Long-form · Series</div>
+      </div>
+      <div class="platform-card">
+        <div class="pf-icon">👥</div>
+        <div class="pf-name">Facebook</div>
+        <div class="pf-level">Community · Paid loop</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills">
+  <div class="skills-inner">
+    <div class="tag-line"><div class="tag-line-bar"></div><span>Skills & Tools</span></div>
+    <h2 class="sec-h">The <span class="italic">Toolkit</span></h2>
+    <div class="skills-grid">
+      <div class="sk-col">
+        <div class="sk-title">Certified</div>
+        <div class="sk-tags">
+          <span class="sk-tag hot">Google Analytics 4 ✦</span>
+          <span class="sk-tag hot">HubSpot CRM ✦</span>
+          <span class="sk-tag hot">INSIDE LVMH ✦</span>
+          <span class="sk-tag">Arts & Heritage — Bocconi</span>
+          <span class="sk-tag">IELTS C1 Academic</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-title">Analytics & Data</div>
+        <div class="sk-tags">
+          <span class="sk-tag hot">GA4</span>
+          <span class="sk-tag hot">Meta Business Manager</span>
+          <span class="sk-tag">Advanced Excel</span>
+          <span class="sk-tag">Tableau / Power BI</span>
+          <span class="sk-tag">SQL (Foundational)</span>
+          <span class="sk-tag">A/B Testing</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-title">Social & CRM</div>
+        <div class="sk-tags">
+          <span class="sk-tag hot">Social Editorial Planning</span>
+          <span class="sk-tag hot">CRM Architecture</span>
+          <span class="sk-tag hot">Audience Segmentation</span>
+          <span class="sk-tag">HubSpot CRM</span>
+          <span class="sk-tag">SAP</span>
+          <span class="sk-tag">MS Dynamics 365</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-title">Languages</div>
+        <div class="sk-tags">
+          <span class="sk-tag hot">Italian — Native</span>
+          <span class="sk-tag hot">English — C1 (IELTS)</span>
+          <span class="sk-tag">French — Professional</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="education">
+  <div class="tag-line"><div class="tag-line-bar"></div><span>Education</span></div>
+  <h2 class="sec-h">Academic <span class="italic">Foundation</span></h2>
+  <div class="edu-list">
+    <div class="edu-row">
+      <div class="edu-yr">2021 — 2023</div>
+      <div>
+        <div class="edu-deg">MSc Economics & Management — Arts, Culture, Media & Entertainment</div>
+        <div class="edu-sch">Università Cattolica del Sacro Cuore · Milan</div>
+      </div>
+      <div class="edu-grade"><span class="edu-gn">110/110</span><span class="edu-gl">with Distinction</span></div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">Jan — May 2023</div>
+      <div>
+        <div class="edu-deg">Exchange Semester — American Storytelling & Design</div>
+        <div class="edu-sch">Loyola University New Orleans</div>
+      </div>
+      <div class="edu-grade"><span class="edu-gn">4.0 GPA</span><span class="edu-gl">A · Excellent</span></div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">2018 — 2021</div>
+      <div>
+        <div class="edu-deg">BA Economics & Management for Arts, Culture & Communication</div>
+        <div class="edu-sch">Università Cattolica · Collegio di Milano (merit scholarship)</div>
+      </div>
+      <div class="edu-grade"><span class="edu-gn">106/110</span><span class="edu-gl">Merit Scholarship</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY LACOSTE -->
+<section class="why">
+  <div class="why-inner">
+    <div class="tag-line"><div class="tag-line-bar"></div><span>Why Lacoste</span></div>
+    <h2 class="sec-h">Game. Set.<br><strong style="color:var(--yellow);font-size:.85em;letter-spacing:.05em;">Match.</strong></h2>
+
+    <div class="why-layout">
+      <div class="why-manifesto">
+        "Lacoste doesn't just sponsor sport — it <strong>lives inside it</strong>. The court is where performance becomes culture, and culture becomes content. That's the story I want to help tell — across every platform, for every match, for every athlete who wears the crocodile."
+      </div>
+      <div class="why-points">
+        <div class="why-pt">
+          <div class="why-pt-n">01</div>
+          <div>
+            <div class="why-pt-title">Brand + Data = My Native Language</div>
+            <div class="why-pt-body">Three years in luxury and heritage environments taught me that the best social content is both instinctive and measurable. I build frameworks and I track them.</div>
+          </div>
+        </div>
+        <div class="why-pt">
+          <div class="why-pt-n">02</div>
+          <div>
+            <div class="why-pt-title">I Love the Live Moment</div>
+            <div class="why-pt-body">Sport happens in real time. I've managed live campaign monitoring, real-time optimisation, and reactive communications under pressure. Weekend work during Roland-Garros? That's not a constraint — that's the job.</div>
+          </div>
+        </div>
+        <div class="why-pt">
+          <div class="why-pt-n">03</div>
+          <div>
+            <div class="why-pt-title">Fashion × Sport is My Intersection</div>
+            <div class="why-pt-body">INSIDE LVMH-certified and trained in premium brand storytelling. Lacoste's positioning — French elegance rooted in athletic performance — is exactly the tension I find most compelling to activate.</div>
+          </div>
+        </div>
+        <div class="why-pt">
+          <div class="why-pt-n">04</div>
+          <div>
+            <div class="why-pt-title">Paris is the Next Chapter</div>
+            <div class="why-pt-body">Moving for this role, full stop. My international experience — Geneva, Milan, New Orleans — has built exactly the adaptability and cross-cultural fluency Paris demands. I'm ready.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="tag-line"><div class="tag-line-bar"></div><span>Contact</span></div>
+  <h2 class="sec-h">Let's <span class="green">Play</span></h2>
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-headline">
+        READY<br>
+        TO <span class="green">SERVE.</span>
+      </div>
+      <p class="contact-sub">Available for interviews in Paris or remotely. Currently in Bologna — fully mobile and committed to this opportunity from day one.</p>
+    </div>
+    <div class="contact-details">
+      <div class="c-row">
+        <span class="c-lbl">Email</span>
+        <a href="mailto:biancamariaboninsegni@gmail.com" class="c-val">biancamariaboninsegni@gmail.com</a>
+      </div>
+      <div class="c-row">
+        <span class="c-lbl">Phone</span>
+        <span class="c-val">+39 366 107 2305</span>
+      </div>
+      <div class="c-row">
+        <span class="c-lbl">Location</span>
+        <span class="c-val">Bologna, Italy → Paris, France</span>
+      </div>
+      <div class="c-row">
+        <span class="c-lbl">Languages</span>
+        <span class="c-val">Italian · English C1 · French B2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Bianca Maria Boninsegni · Application — Global Social Media Manager Sport & Athletes · Lacoste Paris</p>
+  <div class="ft-green"></div>
+  <p>French Fashion Sport.</p>
+</footer>
+
+<script>
+  // cursor
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  (function t(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(t); })();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cur.style.width='12px'; cur.style.height='12px'; cur.style.background='var(--yellow)'; ring.style.width='44px'; ring.style.height='44px'; });
+    el.addEventListener('mouseleave',()=>{ cur.style.width='8px'; cur.style.height='8px'; cur.style.background='var(--green)'; ring.style.width='30px'; ring.style.height='30px'; });
+  });
+
+  // scroll reveals
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } }),{threshold:.08});
+  document.querySelectorAll('.stat-box,.match-card,.exp-item,.sk-col,.platform-card,.edu-row,.why-pt,.pillar').forEach((el,i)=>{
+    el.style.opacity='0'; el.style.transform='translateY(18px)';
+    el.style.transition=`opacity .6s ${i*.06}s ease, transform .6s ${i*.06}s ease`;
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
